@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "generatedBy": "DustLab v1.0.0",
+    "website": "https://winss.xyz/dustlab",
+    "generatedOn": "2025-08-09T19:30:00.000Z",
+    "sourceFile": "test_scale.json",
+    "particleCount": 12,
+    "settings": {
+      "outputWidth": 4,
+      "outputHeight": 4,
+      "particleScale": 1.0,
+      "coordinateMode": "local",
+      "coordinateAxis": "X-Z",
+      "rotation": 0,
+      "version": "1.20.4+",
+      "colorFixed": false,
+      "shapeType": "square"
+    }
+  },
+  "name": "test_scale",
+  "duration": 100,
+  "particles": [
+    {"x": -2.0, "y": 0.0, "z": -2.0, "red": 1.0, "green": 0.0, "blue": 0.0, "scale": 1.5, "delay": 0},
+    {"x": -1.0, "y": 0.0, "z": -2.0, "red": 1.0, "green": 0.5, "blue": 0.0, "scale": 1.5, "delay": 5},
+    {"x": 0.0, "y": 0.0, "z": -2.0, "red": 1.0, "green": 1.0, "blue": 0.0, "scale": 1.5, "delay": 10},
+    {"x": 1.0, "y": 0.0, "z": -2.0, "red": 0.5, "green": 1.0, "blue": 0.0, "scale": 1.5, "delay": 15},
+    {"x": 2.0, "y": 0.0, "z": -2.0, "red": 0.0, "green": 1.0, "blue": 0.0, "scale": 1.5, "delay": 20},
+    
+    {"x": 2.0, "y": 0.0, "z": -1.0, "red": 0.0, "green": 1.0, "blue": 0.5, "scale": 1.5, "delay": 25},
+    {"x": 2.0, "y": 0.0, "z": 0.0, "red": 0.0, "green": 1.0, "blue": 1.0, "scale": 1.5, "delay": 30},
+    {"x": 2.0, "y": 0.0, "z": 1.0, "red": 0.0, "green": 0.5, "blue": 1.0, "scale": 1.5, "delay": 35},
+    {"x": 2.0, "y": 0.0, "z": 2.0, "red": 0.0, "green": 0.0, "blue": 1.0, "scale": 1.5, "delay": 40},
+    
+    {"x": 1.0, "y": 0.0, "z": 2.0, "red": 0.5, "green": 0.0, "blue": 1.0, "scale": 1.5, "delay": 45},
+    {"x": 0.0, "y": 0.0, "z": 2.0, "red": 1.0, "green": 0.0, "blue": 1.0, "scale": 1.5, "delay": 50},
+    {"x": -1.0, "y": 0.0, "z": 2.0, "red": 1.0, "green": 0.0, "blue": 0.5, "scale": 1.5, "delay": 55},
+    {"x": -2.0, "y": 0.0, "z": 2.0, "red": 1.0, "green": 0.0, "blue": 0.0, "scale": 1.5, "delay": 60},
+    
+    {"x": -2.0, "y": 0.0, "z": 1.0, "red": 1.0, "green": 0.5, "blue": 0.0, "scale": 1.5, "delay": 65},
+    {"x": -2.0, "y": 0.0, "z": 0.0, "red": 1.0, "green": 1.0, "blue": 0.0, "scale": 1.5, "delay": 70},
+    {"x": -2.0, "y": 0.0, "z": -1.0, "red": 0.5, "green": 1.0, "blue": 0.0, "scale": 1.5, "delay": 75}
+  ]
+}

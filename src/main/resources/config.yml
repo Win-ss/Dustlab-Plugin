@@ -1,0 +1,29 @@
+# DustLab Configuration
+# This file contains all configuration options for DustLab
+
+# General Settings
+debug: false
+auto-reload-models: true
+
+# Default Values
+default-particle-count: 10
+default-particle-speed: 0.1
+media-particle-scale: 1.25
+
+max-concurrent-effects: 50
+particle-view-distance: 32
+
+messages:
+  prefix: "&9DustLab &b»"
+  
+  console:
+    use-colors: false  
+    clean-output: true
+  
+  no-permission: "&7You don't have permission to use this command."
+  model-not-found: "&7Model '&f{model}&7' not found."
+  model-loaded: "&7Loaded model '&f{model}&7' at &b{x}&7, &b{y}&7, &b{z}"
+  reload-complete: "&7Reloaded {count} particle models."
+  
+  processing-start: "Processing {count} frames from {total} total"
+  processing-complete: "Model creation complete! {frames} frames, {particles} particles"

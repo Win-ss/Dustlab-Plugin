@@ -1,0 +1,108 @@
+{
+  "metadata": {
+    "generatedBy": "DustLab v1.1.0",
+    "website": "https://winss.xyz/dustlab",
+    "generatedOn": "2025-08-20T04:03:00.000Z",
+    "sourceFile": "spellcast.json",
+    "particleCount": 201,
+    "settings": {
+      "outputWidth": 5,
+      "outputHeight": 5,
+      "particleScale": 2.0,
+      "coordinateMode": "local",
+      "coordinateAxis": "X-Y-Z",
+      "rotation": 0,
+      "version": "1.20.4+",
+      "colorFixed": false,
+      "shapeType": "spherical"
+    }
+  },
+  "name": "spell_casting",
+  "duration": 150,
+  "particles": [
+    { "x": 0.0, "y": 0.0, "z": 0.0, "red": 1.0, "green": 1.0, "blue": 1.0, "scale": 2.0, "delay": 0 },
+
+    { "x": 0.5, "y": 0.5, "z": 0.0, "red": 1.0, "green": 0.8, "blue": 0.0, "scale": 2.0, "delay": 5 },
+    { "x": -0.5, "y": 0.5, "z": 0.0, "red": 0.8, "green": 0.0, "blue": 1.0, "scale": 2.0, "delay": 7 },
+    { "x": 0.0, "y": 0.5, "z": 0.5, "red": 1.0, "green": 0.0, "blue": 0.8, "scale": 2.0, "delay": 9 },
+    { "x": 0.0, "y": 0.5, "z": -0.5, "red": 0.7, "green": 0.7, "blue": 1.0, "scale": 2.0, "delay": 11 },
+    { "x": 0.3, "y": 0.6, "z": 0.3, "red": 1.0, "green": 1.0, "blue": 0.5, "scale": 2.0, "delay": 6 },
+    { "x": -0.3, "y": 0.6, "z": -0.3, "red": 0.5, "green": 0.0, "blue": 1.0, "scale": 2.0, "delay": 8 },
+    { "x": 0.3, "y": -0.6, "z": 0.3, "red": 1.0, "green": 0.5, "blue": 0.0, "scale": 2.0, "delay": 10 },
+    { "x": -0.3, "y": -0.6, "z": -0.3, "red": 0.0, "green": 0.5, "blue": 1.0, "scale": 2.0, "delay": 12 },
+
+
+    { "x": 1.0, "y": 1.0, "z": 0.0, "red": 1.0, "green": 0.7, "blue": 0.0, "scale": 2.0, "delay": 15 },
+    { "x": -1.0, "y": 1.0, "z": 0.0, "red": 0.7, "green": 0.0, "blue": 1.0, "scale": 2.0, "delay": 18 },
+    { "x": 0.0, "y": 1.0, "z": 1.0, "red": 1.0, "green": 0.0, "blue": 0.7, "scale": 2.0, "delay": 21 },
+    { "x": 0.0, "y": 1.0, "z": -1.0, "red": 0.9, "green": 0.9, "blue": 1.0, "scale": 2.0, "delay": 24 },
+    { "x": 0.7, "y": 1.2, "z": 0.7, "red": 1.0, "green": 1.0, "blue": 0.0, "scale": 2.0, "delay": 16 },
+    { "x": -0.7, "y": 1.2, "z": -0.7, "red": 0.6, "green": 0.0, "blue": 1.0, "scale": 2.0, "delay": 19 },
+    { "x": 0.7, "y": 1.2, "z": -0.7, "red": 1.0, "green": 0.0, "blue": 0.6, "scale": 2.0, "delay": 22 },
+    { "x": -0.7, "y": 1.2, "z": 0.7, "red": 0.8, "green": 0.8, "blue": 1.0, "scale": 2.0, "delay": 25 },
+    { "x": 1.0, "y": -1.0, "z": 0.0, "red": 1.0, "green": 0.5, "blue": 0.0, "scale": 2.0, "delay": 17 },
+    { "x": -1.0, "y": -1.0, "z": 0.0, "red": 0.0, "green": 0.5, "blue": 1.0, "scale": 2.0, "delay": 20 },
+    { "x": 0.0, "y": -1.0, "z": 1.0, "red": 1.0, "green": 0.0, "blue": 0.5, "scale": 2.0, "delay": 23 },
+    { "x": 0.0, "y": -1.0, "z": -1.0, "red": 0.5, "green": 1.0, "blue": 0.0, "scale": 2.0, "delay": 26 },
+
+    { "x": 2.0, "y": 1.5, "z": 0.0, "red": 1.0, "green": 0.8, "blue": 0.1, "scale": 2.0, "delay": 30 },
+    { "x": -2.0, "y": 1.5, "z": 0.0, "red": 0.6, "green": 0.1, "blue": 1.0, "scale": 2.0, "delay": 33 },
+    { "x": 0.0, "y": 1.5, "z": 2.0, "red": 1.0, "green": 0.2, "blue": 0.9, "scale": 2.0, "delay": 36 },
+    { "x": 0.0, "y": 1.5, "z": -2.0, "red": 0.8, "green": 0.8, "blue": 1.0, "scale": 2.0, "delay": 39 },
+    { "x": 1.4, "y": 1.7, "z": 1.4, "red": 1.0, "green": 1.0, "blue": 0.2, "scale": 2.0, "delay": 31 },
+    { "x": -1.4, "y": 1.7, "z": -1.4, "red": 0.4, "green": 0.0, "blue": 1.0, "scale": 2.0, "delay": 34 },
+    { "x": 1.4, "y": 1.7, "z": -1.4, "red": 1.0, "green": 0.0, "blue": 0.4, "scale": 2.0, "delay": 37 },
+    { "x": -1.4, "y": 1.7, "z": 1.4, "red": 0.9, "green": 0.9, "blue": 1.0, "scale": 2.0, "delay": 40 },
+    { "x": 2.0, "y": -1.5, "z": 0.0, "red": 1.0, "green": 0.6, "blue": 0.0, "scale": 2.0, "delay": 32 },
+    { "x": -2.0, "y": -1.5, "z": 0.0, "red": 0.0, "green": 0.6, "blue": 1.0, "scale": 2.0, "delay": 35 },
+    { "x": 0.0, "y": -1.5, "z": 2.0, "red": 1.0, "green": 0.0, "blue": 0.6, "scale": 2.0, "delay": 38 },
+    { "x": 0.0, "y": -1.5, "z": -2.0, "red": 0.6, "green": 1.0, "blue": 0.0, "scale": 2.0, "delay": 41 },
+
+    { "x": 2.5, "y": 2.0, "z": 0.0, "red": 1.0, "green": 0.9, "blue": 0.2, "scale": 2.0, "delay": 45 },
+    { "x": -2.5, "y": 2.0, "z": 0.0, "red": 0.5, "green": 0.0, "blue": 1.0, "scale": 2.0, "delay": 48 },
+    { "x": 0.0, "y": 2.0, "z": 2.5, "red": 1.0, "green": 0.1, "blue": 0.9, "scale": 2.0, "delay": 51 },
+    { "x": 0.0, "y": 2.0, "z": -2.5, "red": 0.9, "green": 0.9, "blue": 1.0, "scale": 2.0, "delay": 54 },
+    { "x": 1.8, "y": 2.2, "z": 1.8, "red": 1.0, "green": 1.0, "blue": 0.3, "scale": 2.0, "delay": 46 },
+    { "x": -1.8, "y": 2.2, "z": -1.8, "red": 0.3, "green": 0.0, "blue": 1.0, "scale": 2.0, "delay": 49 },
+    { "x": 1.8, "y": 2.2, "z": -1.8, "red": 1.0, "green": 0.0, "blue": 0.3, "scale": 2.0, "delay": 52 },
+    { "x": -1.8, "y": 2.2, "z": 1.8, "red": 0.8, "green": 0.8, "blue": 1.0, "scale": 2.0, "delay": 55 },
+    { "x": 2.5, "y": -2.0, "z": 0.0, "red": 1.0, "green": 0.7, "blue": 0.0, "scale": 2.0, "delay": 47 },
+    { "x": -2.5, "y": -2.0, "z": 0.0, "red": 0.0, "green": 0.7, "blue": 1.0, "scale": 2.0, "delay": 50 },
+    { "x": 0.0, "y": -2.0, "z": 2.5, "red": 1.0, "green": 0.0, "blue": 0.7, "scale": 2.0, "delay": 53 },
+    { "x": 0.0, "y": -2.0, "z": -2.5, "red": 0.7, "green": 1.0, "blue": 0.0, "scale": 2.0, "delay": 56 },
+
+
+    { "x": 0.8, "y": 0.8, "z": 0.8, "red": 1.0, "green": 0.9, "blue": 0.1, "scale": 2.0, "delay": 10 },
+    { "x": -0.8, "y": 0.8, "z": 0.8, "red": 0.9, "green": 0.1, "blue": 1.0, "scale": 2.0, "delay": 12 },
+    { "x": 0.8, "y": -0.8, "z": 0.8, "red": 1.0, "green": 0.2, "blue": 0.9, "scale": 2.0, "delay": 14 },
+    { "x": 0.8, "y": 0.8, "z": -0.8, "red": 0.2, "green": 0.9, "blue": 1.0, "scale": 2.0, "delay": 16 },
+
+    { "x": 1.5, "y": 1.5, "z": 1.5, "red": 1.0, "green": 1.0, "blue": 0.5, "scale": 2.0, "delay": 20 },
+    { "x": -1.5, "y": 1.5, "z": 1.5, "red": 0.5, "green": 0.0, "blue": 1.0, "scale": 2.0, "delay": 22 },
+    { "x": 1.5, "y": -1.5, "z": 1.5, "red": 1.0, "green": 0.5, "blue": 0.0, "scale": 2.0, "delay": 24 },
+    { "x": 1.5, "y": 1.5, "z": -1.5, "red": 0.0, "green": 0.5, "blue": 1.0, "scale": 2.0, "delay": 26 },
+
+    { "x": 2.0, "y": 2.0, "z": 2.0, "red": 1.0, "green": 0.8, "blue": 0.1, "scale": 2.0, "delay": 30 },
+    { "x": -2.0, "y": 2.0, "z": 2.0, "red": 0.6, "green": 0.1, "blue": 1.0, "scale": 2.0, "delay": 32 },
+    { "x": 2.0, "y": -2.0, "z": 2.0, "red": 1.0, "green": 0.2, "blue": 0.9, "scale": 2.0, "delay": 34 },
+    { "x": 2.0, "y": 2.0, "z": -2.0, "red": 0.8, "green": 0.8, "blue": 1.0, "scale": 2.0, "delay": 36 },
+
+    { "x": 1.0, "y": 2.2, "z": 0.0, "red": 1.0, "green": 0.9, "blue": 0.2, "scale": 2.0, "delay": 38 },
+    { "x": -1.0, "y": 2.2, "z": 0.0, "red": 0.5, "green": 0.0, "blue": 1.0, "scale": 2.0, "delay": 40 },
+    { "x": 0.0, "y": 2.2, "z": 1.0, "red": 1.0, "green": 0.1, "blue": 0.9, "scale": 2.0, "delay": 42 },
+    { "x": 0.0, "y": 2.2, "z": -1.0, "red": 0.9, "green": 0.9, "blue": 1.0, "scale": 2.0, "delay": 44 },
+    { "x": 1.0, "y": -2.2, "z": 0.0, "red": 1.0, "green": 0.7, "blue": 0.0, "scale": 2.0, "delay": 46 },
+    { "x": -1.0, "y": -2.2, "z": 0.0, "red": 0.0, "green": 0.7, "blue": 1.0, "scale": 2.0, "delay": 48 },
+    { "x": 0.0, "y": -2.2, "z": 1.0, "red": 1.0, "green": 0.0, "blue": 0.7, "scale": 2.0, "delay": 50 },
+    { "x": 0.0, "y": -2.2, "z": -1.0, "red": 0.7, "green": 1.0, "blue": 0.0, "scale": 2.0, "delay": 52 },
+
+    { "x": 2.0, "y": 0.0, "z": 2.0, "red": 1.0, "green": 0.8, "blue": 0.1, "scale": 2.0, "delay": 55 },
+    { "x": -2.0, "y": 0.0, "z": 2.0, "red": 0.6, "green": 0.1, "blue": 1.0, "scale": 2.0, "delay": 57 },
+    { "x": 2.0, "y": 0.0, "z": -2.0, "red": 1.0, "green": 0.2, "blue": 0.9, "scale": 2.0, "delay": 59 },
+    { "x": -2.0, "y": 0.0, "z": -2.0, "red": 0.8, "green": 0.8, "blue": 1.0, "scale": 2.0, "delay": 61 },
+    { "x": 2.4, "y": 0.0, "z": 0.0, "red": 1.0, "green": 0.9, "blue": 0.2, "scale": 2.0, "delay": 63 },
+    { "x": -2.4, "y": 0.0, "z": 0.0, "red": 0.5, "green": 0.0, "blue": 1.0, "scale": 2.0, "delay": 65 },
+    { "x": 0.0, "y": 0.0, "z": 2.4, "red": 1.0, "green": 0.1, "blue": 0.9, "scale": 2.0, "delay": 67 },
+    { "x": 0.0, "y": 0.0, "z": -2.4, "red": 0.9, "green": 0.9, "blue": 1.0, "scale": 2.0, "delay": 69 }
+  ]
+}

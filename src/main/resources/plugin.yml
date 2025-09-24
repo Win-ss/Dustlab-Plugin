@@ -1,0 +1,73 @@
+name: DustLab
+version: '${project.version}'
+main: com.winss.dustlab.DustLab
+api-version: '1.20'
+description: An elegantly simple particle plugin for displaying anything from 3D models, animated media and stunning effects!
+author: Winss
+website: https://winss.xyz/dustlab
+
+commands:
+  dustlab:
+    description: Main DustLab command
+    usage: /<command> <subcommand> [args...]
+    aliases: [dl]
+    permission: dustlab.use
+
+permissions:
+  dustlab.use:
+    description: Basic DustLab usage
+    default: true
+  dustlab.admin:
+    description: Administrative DustLab commands
+    default: op
+  dustlab.load:
+    description: Load particle models
+    default: op
+  dustlab.loadfx:
+    description: Load particle models with effects
+    default: op
+  dustlab.playerload:
+    description: Attach particle models to players
+    default: op
+  dustlab.unload:
+    description: Unload particle effects
+    default: op
+  dustlab.move:
+    description: Move particle effects
+    default: op
+  dustlab.list:
+    description: List available particle models
+    default: op
+  dustlab.active:
+    description: View active particle effects
+    default: op
+  dustlab.info:
+    description: View model metadata information
+    default: op
+  dustlab.create:
+    description: Create new particle models
+    default: op
+  dustlab.delete:
+    description: Delete particle models
+    default: op
+  dustlab.reload:
+    description: Reload plugin configuration
+    default: op
+  dustlab.stats:
+    description: View plugin statistics
+    default: op
+  dustlab.help:
+    description: View command help
+    default: true
+  dustlab.website:
+    description: View DustLab website link
+    default: true
+  dustlab.view:
+    description: Global permission to see DustLab particle models
+    default: op
+  dustlab.view.*:
+    description: Permission to view all specific particle models
+    default: true
+  dustlab.force:
+    description: Force load models regardless of view permissions
+    default: op
