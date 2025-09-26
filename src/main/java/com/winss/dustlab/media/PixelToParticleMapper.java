@@ -1,6 +1,6 @@
 package com.winss.dustlab.media;
 
-import com.winss.dustlab.models.ParticleData;
+import com.winss.dustlab.packed.PackedParticleArray;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +9,14 @@ public class PixelToParticleMapper {
     
     // optimized pixel-to-particle conversion with better coverage and performance
 
-    public static List<ParticleData> imageToParticlesOptimized(BufferedImage image, int blockWidth, int blockHeight, int maxParticles, float particleScale) {
-        List<ParticleData> particles = new ArrayList<>(maxParticles);
+    public static PackedParticleArray imageToParticlesOptimized(BufferedImage image, int blockWidth, int blockHeight, int maxParticles, float particleScale) {
+        PackedParticleArray.Builder builder = PackedParticleArray.builder(maxParticles);
         
         int imgWidth = image.getWidth();
         int imgHeight = image.getHeight();
         
         if (imgWidth == 0 || imgHeight == 0) {
-            return particles;
+            return builder.build();
         }
         
         // Pre-calculate RGB array for faster access
@@ -70,18 +70,17 @@ public class PixelToParticleMapper {
                 int red = (rgb >> 16) & 0xFF;
                 int green = (rgb >> 8) & 0xFF;
                 int blue = rgb & 0xFF;
-                
-                ParticleData particle = new ParticleData();
-                particle.setX(particleX);
-                particle.setY(particleY);
-                particle.setZ(0.0);
-                particle.setR(red / 255.0);
-                particle.setG(green / 255.0);
-                particle.setB(blue / 255.0);
-                particle.setDelay(0);
-                particle.setScale(particleScale);
-                
-                particles.add(particle);
+
+                builder.add(
+                    particleX,
+                    particleY,
+                    0.0d,
+                    red / 255.0,
+                    green / 255.0,
+                    blue / 255.0,
+                    0,
+                    particleScale
+                );
                 recentPositions.add(new double[]{particleX, particleY});
                 particleCount++;
                 
@@ -129,18 +128,17 @@ public class PixelToParticleMapper {
                     int red = (rgb >> 16) & 0xFF;
                     int green = (rgb >> 8) & 0xFF;
                     int blue = rgb & 0xFF;
-                    
-                    ParticleData particle = new ParticleData();
-                    particle.setX(particleX);
-                    particle.setY(particleY);
-                    particle.setZ(0.0);
-                    particle.setR(red / 255.0);
-                    particle.setG(green / 255.0);
-                    particle.setB(blue / 255.0);
-                    particle.setDelay(0);
-                    particle.setScale(particleScale);
-                    
-                    particles.add(particle);
+
+                    builder.add(
+                        particleX,
+                        particleY,
+                        0.0d,
+                        red / 255.0,
+                        green / 255.0,
+                        blue / 255.0,
+                        0,
+                        particleScale
+                    );
                     recentPositions.add(new double[]{particleX, particleY});
                     particleCount++;
                     
@@ -151,6 +149,6 @@ public class PixelToParticleMapper {
             }
         }
         
-        return particles;
+        return builder.build();
     }
 }

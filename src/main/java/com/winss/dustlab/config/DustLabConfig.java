@@ -18,6 +18,13 @@ public class DustLabConfig {
     private int largeModelThreshold = 4500;
     private int veryLargeModelThreshold = 15000;
     private int particlesPerBatch = 500;
+    // Progressive loading options
+    private boolean progressiveLoadingEnabled = true;
+    private int progressiveLargeModelThreshold = 50000; // start progressive at > 50k particles
+    private int progressiveParseBatchSize = 5000; // particles parsed per async batch
+    private int progressiveApplyBatchPerTick = 2500; // particles appended per tick on main thread
+    private int progressiveProgressLogPercent = 10; // log every X percent
+    private int progressiveMaxConcurrent = 2; // max models parsed concurrently
     private double maxRenderDistance = 48.0;
     private boolean enableAutoSave = true;
     private int autoSaveIntervalMinutes = 30;
@@ -27,7 +34,7 @@ public class DustLabConfig {
     public enum AnimatedParticleMode { REDSTONE, TRANSITION }
     private AnimatedParticleMode animatedParticleMode = AnimatedParticleMode.REDSTONE;
     private int mediaParticleLifespanTicks = 1; 
-    private int mediaMaxFrames = 3000;
+    private int mediaMaxFrames = 150;
     private int mediaMaxFileSizeMB = 25;
     private boolean mediaDefaultGzip = false;
     
@@ -54,6 +61,13 @@ public class DustLabConfig {
         largeModelThreshold = config.getInt("performance.large-model-threshold", 4500);
         veryLargeModelThreshold = config.getInt("performance.very-large-model-threshold", 15000);
         particlesPerBatch = config.getInt("performance.particles-per-batch", 500);
+    // Progressive loading
+    progressiveLoadingEnabled = config.getBoolean("progressive.enabled", true);
+    progressiveLargeModelThreshold = config.getInt("progressive.large-model-threshold", 50000);
+    progressiveParseBatchSize = config.getInt("progressive.parse-batch-size", 5000);
+    progressiveApplyBatchPerTick = config.getInt("progressive.apply-batch-per-tick", 2500);
+    progressiveProgressLogPercent = config.getInt("progressive.progress-log-interval-percent", 10);
+    progressiveMaxConcurrent = Math.max(1, config.getInt("progressive.max-async-loads", 2));
         maxRenderDistance = config.getDouble("performance.max-render-distance", 48.0);
         enableAutoSave = config.getBoolean("persistence.enable-auto-save", true);
         autoSaveIntervalMinutes = config.getInt("persistence.auto-save-interval-minutes", 30);
@@ -68,7 +82,7 @@ public class DustLabConfig {
         }
         mediaParticleLifespanTicks = config.getInt("media.particle-lifespan-ticks", 1);
         // Media limits
-        mediaMaxFrames = config.getInt("media.max-frames", 3000);
+    mediaMaxFrames = config.getInt("media.max-frames", 150);
         mediaMaxFileSizeMB = config.getInt("media.max-file-size-mb", 25);
     mediaDefaultGzip = config.getBoolean("media.default-gzip", false);
     // Delete confirmation timeout
@@ -94,6 +108,13 @@ public class DustLabConfig {
             config.set("performance.large-model-threshold", 4500);
             config.set("performance.very-large-model-threshold", 15000);
             config.set("performance.particles-per-batch", 500);
+            // Progressive loading defaults
+            config.set("progressive.enabled", true);
+            config.set("progressive.large-model-threshold", 50000);
+            config.set("progressive.parse-batch-size", 5000);
+            config.set("progressive.apply-batch-per-tick", 2500);
+            config.set("progressive.progress-log-interval-percent", 10);
+            config.set("progressive.max-async-loads", 2);
             config.set("performance.max-render-distance", 48.0);
             
             config.set("temp-models.lifetime-minutes", 30);
@@ -115,7 +136,7 @@ public class DustLabConfig {
             config.set("media.particle-scale", 1.25);
             config.set("media.animated-particle-mode", "REDSTONE");
             config.set("media.particle-lifespan-ticks", 1);
-            config.set("media.max-frames", 3000);
+            config.set("media.max-frames", 150);
             config.set("media.max-file-size-mb", 25);
             config.set("media.default-gzip", false);
 
@@ -138,7 +159,7 @@ public class DustLabConfig {
             // Comments
             
             config.setComments("safety", java.util.Arrays.asList(
-                "Safety settings for seizure prevention and performance protection (you do not want to know why it was named like that)",
+                "Safety settings for rapid flashing prevention and performance protection (you do not want to know why it was named like that)",
                 "enable-anti-epilepsy: Enables fade-in effects and limits rapid flashing (default: true)",
                 "fade-in-duration-ticks: Duration of fade-in effect in ticks (default: 40 = 2 seconds)",
                 "max-concurrent-models: Maximum number of models that can play simultaneously (default: 10)"
@@ -163,7 +184,7 @@ public class DustLabConfig {
                 "Settings specific to media (image/GIF) processing",
                 "particle-scale: Scale multiplier for media-based particles (default: 1.25)",
                 "animated-particle-mode: Particle type for animated frames: REDSTONE or TRANSITION (default: REDSTONE)",
-                "max-frames: Maximum number of frames to import from media (default: 3000)",
+                "max-frames: Maximum number of frames to import from media (default: 150)",
                 "max-file-size-mb: Maximum download size for media files in megabytes (default: 25)",
                 "default-gzip: If true, '/dl create media' saves models as .json.gz unless the user explicitly omits it"
             ));
@@ -212,6 +233,13 @@ public class DustLabConfig {
     public int getVeryLargeModelThreshold() { return veryLargeModelThreshold; }
     public int getParticlesPerBatch() { return particlesPerBatch; }
     public double getMaxRenderDistance() { return maxRenderDistance; }
+    // Progressive getters
+    public boolean isProgressiveLoadingEnabled() { return progressiveLoadingEnabled; }
+    public int getProgressiveLargeModelThreshold() { return progressiveLargeModelThreshold; }
+    public int getProgressiveParseBatchSize() { return progressiveParseBatchSize; }
+    public int getProgressiveApplyBatchPerTick() { return progressiveApplyBatchPerTick; }
+    public int getProgressiveProgressLogPercent() { return progressiveProgressLogPercent; }
+    public int getProgressiveMaxConcurrent() { return progressiveMaxConcurrent; }
     public boolean isAutoSaveEnabled() { return enableAutoSave; }
     public int getAutoSaveIntervalMinutes() { return autoSaveIntervalMinutes; }
     public boolean isAntiEpilepsyEnabled() { return enableAntiEpilepsy; }

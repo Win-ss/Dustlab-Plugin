@@ -5,6 +5,7 @@ import com.winss.dustlab.managers.ParticleModelManager;
 import com.winss.dustlab.effects.ParticleEffects;
 import com.winss.dustlab.models.ParticleModel;
 import com.winss.dustlab.models.ParticleData;
+import com.winss.dustlab.monitoring.PerformanceMonitor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -190,7 +191,14 @@ public class DustLabCommand implements CommandExecutor, TabCompleter {
         Player player = sender instanceof Player ? (Player) sender : null;
         String modelName = args[1];
 
+        // If not fully loaded yet but loading in progress, subscribe and inform
         if (!plugin.getParticleModelManager().hasModel(modelName)) {
+            if (plugin.getParticleModelManager().isModelLoading(modelName)) {
+                plugin.getParticleModelManager().subscribeToLoading(modelName, sender);
+                int pct = plugin.getParticleModelManager().getModelLoadingPercent(modelName);
+                sender.sendMessage("§9DustLab §e» §7Model '§f" + modelName + "§7' is still loading §e" + pct + "%§7. You'll be notified when it's ready. Try again after completion.");
+                return true;
+            }
             sender.sendMessage("§9DustLab §4» §7Model '§f" + modelName + "§7' not found.");
             return true;
         }
@@ -255,7 +263,7 @@ public class DustLabCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        int effectId = plugin.getParticleModelManager().playModel(modelName, location, lifetimeSeconds);
+    int effectId = plugin.getParticleModelManager().playModel(modelName, location, lifetimeSeconds);
 
         if (effectId == -1) {
             sender.sendMessage("§9DustLab §c» §7Failed to load model '§f" + modelName + "§7'.");
@@ -818,10 +826,60 @@ public class DustLabCommand implements CommandExecutor, TabCompleter {
         int totalModels = manager.getAllModels().size();
         
         sender.sendMessage("§a▸ Total Loaded Models: §f" + totalModels);
-        
+        ParticleModelManager.MemoryUsageReport memory = manager.estimateMemoryUsage();
+        sender.sendMessage("§7    §8• §bAnimated: §f" + memory.animatedModelCount() + " §7models §8(§f" + formatCount(memory.animationFrameCount()) + "§7 frames§8)");
+        sender.sendMessage("§7    §8• §9Static: §f" + memory.staticModelCount() + " §7models");
+
+        double totalMb = memory.totalBytes() / (1024.0D * 1024.0D);
+        double packedMb = memory.packedBytes() / (1024.0D * 1024.0D);
+        double legacyMb = memory.legacyBytes() / (1024.0D * 1024.0D);
+        double optimizerMb = memory.optimizerBytes() / (1024.0D * 1024.0D);
+
+        sender.sendMessage("§b▸ §7Plugin Heap Footprint: §f" + formatMb(totalMb) + " §7MB");
+        sender.sendMessage("§7    §8• §9Packed model data: §f" + formatMb(packedMb) + " §7MB §8(§f" + formatCount(memory.packedParticleCount()) + "§7 particles§8)");
+        if (memory.legacyBytes() > 0L) {
+            sender.sendMessage("§7    §8• §1Legacy particle lists: §f" + formatMb(legacyMb) + " §7MB §8(§f" + formatCount(memory.legacyParticleCount()) + "§7 particles§8)");
+        }
+        sender.sendMessage("§7    §8• §9Optimizer cache: §f" + formatMb(optimizerMb) + " §7MB §8(§f" + formatCount(memory.optimizerTrackedParticles()) + "§7 tracked§8)");
+        sender.sendMessage("§a▸ Active Effects: §f" + formatCount(memory.activeEffectCount()) +
+                " §7(optimizer tracking §f" + formatCount(memory.optimizerTrackedEffects()) + "§7 effects)");
+
+        PerformanceMonitor monitor = plugin.getPerformanceMonitor();
+        if (monitor != null) {
+            PerformanceMonitor.PerformanceSnapshot snapshot = monitor.snapshot();
+            sender.sendMessage("§b▸ §7Process Usage:");
+            sendPerformanceWindow(sender, "Last 10s", snapshot.tenSeconds());
+            sendPerformanceWindow(sender, "Last 1m", snapshot.oneMinute());
+            sendPerformanceWindow(sender, "Last 5m", snapshot.fiveMinutes());
+        } else {
+            sender.sendMessage("§c▸ §7Performance data not available.");
+        }
+
         sender.sendMessage("§7§m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         
         return true;
+    }
+
+    private void sendPerformanceWindow(CommandSender sender, String label, PerformanceMonitor.WindowAverages window) {
+        if (window.samples() <= 0) {
+            sender.sendMessage("§7  §8- §b" + label + " §8» §7Collecting data...");
+            return;
+        }
+
+        String cpuText = window.hasCpuData()
+                ? String.format(java.util.Locale.US, "§f%.1f§7%%", window.cpuPercent())
+                : "§cN/A";
+        String ramText = String.format(java.util.Locale.US, "§f%.1f §7MB", window.ramMb());
+        sender.sendMessage("§7  §8- §b" + label + " §8» §9CPU: " + cpuText + " §8| §1RAM: " + ramText +
+                " §8(§7" + window.samples() + " samples§8)");
+    }
+
+    private String formatMb(double value) {
+        return String.format(java.util.Locale.US, "%.2f", value);
+    }
+
+    private String formatCount(long value) {
+        return String.format(java.util.Locale.US, "%,d", value);
     }
     
     private boolean handleHelp(CommandSender sender, String[] args) {
@@ -1537,7 +1595,7 @@ public class DustLabCommand implements CommandExecutor, TabCompleter {
 
         sender.sendMessage("§9DustLab §7» §7Creating §b" + type + "§7 model for player §b" + playerName + "§7...");
 
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
+        com.winss.dustlab.media.MediaProcessor.submitAsync(() -> {
             try {
                 createPlayerModel(sender, type, modelName, playerName, resolution, scale, isTemporary);
             } catch (Exception e) {
@@ -1708,7 +1766,9 @@ public class DustLabCommand implements CommandExecutor, TabCompleter {
         com.winss.dustlab.media.MediaProcessor processor = new com.winss.dustlab.media.MediaProcessor(plugin);
         processor.processMediaUrl(url, modelName, blockWidth, blockHeight, maxParticles, !isTemporary, frameSkip)
             .thenAccept(animatedModel -> {
+                if (!plugin.isEnabled()) { onMediaProcessingComplete(ownerId, modelName); return; }
                 plugin.getServer().getScheduler().runTask(plugin, () -> {
+                    if (!plugin.isEnabled()) { onMediaProcessingComplete(ownerId, modelName); return; }
                     try {
                         // Tag compression preference in metadata for the manager to decide file extension
                         java.util.Map<String, Object> md = animatedModel.getMetadata();
@@ -1738,7 +1798,9 @@ public class DustLabCommand implements CommandExecutor, TabCompleter {
                 });
             })
             .exceptionally(throwable -> {
+                if (!plugin.isEnabled()) { return null; }
                 plugin.getServer().getScheduler().runTask(plugin, () -> {
+                    if (!plugin.isEnabled()) { return; }
                     sender.sendMessage("§9DustLab §c» §7Failed to create animated model: " + throwable.getMessage());
                     onMediaProcessingComplete(ownerId, modelName);
                 });

@@ -64,7 +64,7 @@ permissions:
     default: true
   dustlab.view:
     description: Global permission to see DustLab particle models
-    default: op
+    default: true
   dustlab.view.*:
     description: Permission to view all specific particle models
     default: true

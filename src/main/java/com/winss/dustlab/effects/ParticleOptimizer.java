@@ -111,6 +111,13 @@ public class ParticleOptimizer {
                 .sum();
     }
 
+    public long estimateMemoryBytes() {
+        long effectOverhead = (long) particleStates.size() * 96L;
+        long stateCount = getTotalParticleCount();
+        long stateOverhead = stateCount * 112L;
+        return effectOverhead + stateOverhead;
+    }
+
     public void forceUpdateEffect(String effectId) {
         Map<String, ParticleState> effectStates = particleStates.get(effectId);
         if (effectStates != null) {

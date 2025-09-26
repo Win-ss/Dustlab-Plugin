@@ -1,6 +1,9 @@
 package com.winss.dustlab.models;
 
 import com.google.gson.annotations.SerializedName;
+import com.winss.dustlab.packed.PackedParticleArray;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +14,9 @@ public class ParticleModel {
     
     @SerializedName("particles")
     private List<ParticleData> particles;
+
+    private transient PackedParticleArray packedParticles;
+    private transient List<ParticleData> packedAdapter;
     
     private transient String name;
     private transient int duration = 100; 
@@ -40,11 +46,23 @@ public class ParticleModel {
     }
     
     public List<ParticleData> getParticles() {
-        return particles;
+        if (particles != null) {
+            return particles;
+        }
+        if (packedAdapter != null) {
+            return packedAdapter;
+        }
+        if (packedParticles != null) {
+            packedAdapter = packedParticles.toParticleDataList();
+            return packedAdapter;
+        }
+        return Collections.emptyList();
     }
     
     public void setParticles(List<ParticleData> particles) {
         this.particles = particles;
+        this.packedParticles = null;
+        this.packedAdapter = null;
     }
     
     public int getDuration() {
@@ -53,6 +71,22 @@ public class ParticleModel {
     
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public PackedParticleArray getPackedParticles() {
+        return packedParticles;
+    }
+
+    public void setPackedParticles(PackedParticleArray packedParticles) {
+        this.packedParticles = packedParticles;
+        this.packedAdapter = packedParticles != null ? packedParticles.toParticleDataList() : null;
+        if (packedParticles != null) {
+            this.particles = packedAdapter;
+        }
+    }
+
+    public boolean hasPackedParticles() {
+        return packedParticles != null;
     }
     
 

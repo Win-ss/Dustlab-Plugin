@@ -2,6 +2,7 @@ package com.winss.dustlab.media;
 
 import com.winss.dustlab.DustLab;
 import com.winss.dustlab.models.ParticleData;
+import com.winss.dustlab.packed.PackedParticleArray;
 import org.bukkit.plugin.Plugin;
 
 import javax.imageio.ImageIO;
@@ -42,7 +43,7 @@ public class MediaProcessor {
         @Override
         public Thread newThread(Runnable r) {
             Thread t = new Thread(r, "DustLab-MediaProcessor-" + threadNumber.getAndIncrement());
-            t.setDaemon(true); 
+            t.setDaemon(false);
             t.setPriority(Thread.NORM_PRIORITY);
             return t;
         }
@@ -59,13 +60,29 @@ public class MediaProcessor {
         if (!MEDIA_PROCESSING_EXECUTOR.isShutdown()) {
             MEDIA_PROCESSING_EXECUTOR.shutdown();
             try {
-                if (!MEDIA_PROCESSING_EXECUTOR.awaitTermination(5, java.util.concurrent.TimeUnit.SECONDS)) {
-                    MEDIA_PROCESSING_EXECUTOR.shutdownNow();
+                while (!MEDIA_PROCESSING_EXECUTOR.awaitTermination(5, java.util.concurrent.TimeUnit.SECONDS)) {
+                    java.util.logging.Logger.getLogger(MediaProcessor.class.getName())
+                        .info("Waiting for media processing tasks to finish...");
                 }
             } catch (InterruptedException e) {
-                MEDIA_PROCESSING_EXECUTOR.shutdownNow();
+                Thread.currentThread().interrupt();
             }
         }
+    }
+
+    /**
+     * Submit a task to the shared media processing executor. Prefer this over Bukkit async tasks
+     * so shutdown() can gracefully drain remaining work.
+     */
+    public static void submitAsync(Runnable task) {
+        MEDIA_PROCESSING_EXECUTOR.submit(task);
+    }
+
+    /**
+     * Submit a task and get a Future for cancellation or waiting.
+     */
+    public static java.util.concurrent.Future<?> submitAsyncFuture(Runnable task) {
+        return MEDIA_PROCESSING_EXECUTOR.submit(task);
     }
     
 
@@ -290,10 +307,10 @@ public class MediaProcessor {
                 int frameDelay = getFrameDelayOptimized(reader, frameIndex, frameSkip, numFrames);
                 
                 float particleScale = ((DustLab) plugin).getDustLabConfig().getMediaParticleScale();
-                List<ParticleData> particles = PixelToParticleMapper.imageToParticlesOptimized(
+                PackedParticleArray packedParticles = PixelToParticleMapper.imageToParticlesOptimized(
                     frame, blockWidth, blockHeight, maxParticleCount, particleScale);
-                
-                frames.add(new FrameData(particles, frameIndex, frameDelay));
+
+                frames.add(new FrameData(packedParticles, frameIndex, frameDelay));
                 processedFrames++;
                 
                 // No dependency on previous frame composition

@@ -2,6 +2,8 @@ package com.winss.dustlab.media;
 
 import com.winss.dustlab.models.ParticleModel;
 import com.winss.dustlab.models.ParticleData;
+import com.winss.dustlab.packed.PackedParticleArray;
+import java.util.Collections;
 import java.util.List;
 @SuppressWarnings("unused")
 public class AnimatedModel extends ParticleModel {
@@ -19,9 +21,10 @@ public class AnimatedModel extends ParticleModel {
                         int blockWidth, int blockHeight, int maxParticleCount) {
         super();
         this.setName(name);
-        this.frames = frames;
+        List<FrameData> safeFrames = frames != null ? frames : Collections.emptyList();
+        this.frames = Collections.unmodifiableList(safeFrames);
         this.looping = looping;
-        this.totalFrames = frames.size();
+        this.totalFrames = safeFrames.size();
         this.sourceUrl = sourceUrl;
         this.createdTime = System.currentTimeMillis();
         this.blockWidth = blockWidth;
@@ -30,9 +33,15 @@ public class AnimatedModel extends ParticleModel {
         this.tickAligned = determineTickAligned(frames);
         
         // Set the base duration and particles from the first frame for compatibility
-        if (!frames.isEmpty()) {
+        if (!safeFrames.isEmpty()) {
             this.setDuration(calculateTotalDuration());
-            this.setParticles(frames.get(0).getParticles());
+            FrameData first = safeFrames.get(0);
+            PackedParticleArray packed = first.getPackedParticles();
+            if (packed != null) {
+                this.setPackedParticles(packed);
+            } else {
+                this.setParticles(first.getParticles());
+            }
         }
     }
     
